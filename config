@@ -1,0 +1,263 @@
+# i3 config file (v4)
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+
+new_window pixel 2
+new_float normal
+hide_edge_borders none
+font pango:Cantarell 9
+focus_follows_mouse no
+floating_modifier $mod
+
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
+bindsym $mod+F1 exec thunderbird
+bindsym $mod+F2 exec firefox
+bindsym $mod+F3 exec chromium-browser
+bindsym $mod+F4 exec brave
+bindsym $mod+F5 exec pcmanfm
+bindsym $mod+F6 exec virt-manager
+bindsym $mod+F7 exec virtualbox
+bindsym $mod+F8 exec atom
+bindsym $mod+F9 exec libreoffice
+bindsym $mod+F10 exec pidgin 
+bindsym $mod+F11 exec --no-startup-id /home/thomas/Bin/FromScratch-linux-x64/FromScratch
+bindsym $mod+F12 exec tilda
+bindsym $mod+t exec --no-startup-id pkill compton
+bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+bindsym $mod+Shift+d exec killall dunst && exec twmnc -t Notify -c "Restart dunst" -i yellow
+bindsym $mod+Ctrl+x exec xkill
+bindsym Print exec scrot '%Y-%m-%d-screenshot.png' -e 'mv $ $f ~/Images/Screenshots/' && exec twmnc -t Notify -c "Screenshot has been saved to ~/Screenshots" -i yellow
+
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+workspace_auto_back_and_forth yes
+bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+bindsym $mod+b split horizontal;exec twmnc -t Notify -c "Tile horizontally" -i yellow
+bindsym $mod+v split vertical;exec twmnc -t Notify -c "Tile vertically" -i yellow
+
+bindsym $mod+f fullscreen
+
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+Shift+a focus parent
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
+bindsym $mod+Ctrl+1 move container to workspace number 1
+bindsym $mod+Ctrl+2 move container to workspace number 2
+bindsym $mod+Ctrl+3 move container to workspace number 3
+bindsym $mod+Ctrl+4 move container to workspace number 4
+bindsym $mod+Ctrl+5 move container to workspace number 5
+bindsym $mod+Ctrl+6 move container to workspace number 6
+bindsym $mod+Ctrl+7 move container to workspace number 7
+bindsym $mod+Ctrl+8 move container to workspace number 8
+bindsym $mod+Ctrl+9 move container to workspace number 9
+bindsym $mod+Ctrl+0 move container to workspace number 10
+
+bindsym $mod+Shift+1 move container to workspace number 1; workspace 1
+bindsym $mod+Shift+2 move container to workspace number 2; workspace 2
+bindsym $mod+Shift+3 move container to workspace number 3; workspace 3
+bindsym $mod+Shift+4 move container to workspace number 4; workspace 4
+bindsym $mod+Shift+5 move container to workspace number 5; workspace 5
+bindsym $mod+Shift+6 move container to workspace number 6; workspace 6
+bindsym $mod+Shift+7 move container to workspace number 7; workspace 7
+bindsym $mod+Shift+8 move container to workspace number 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace number 9; workspace 9
+bindsym $mod+Shift+0 move container to workspace number 10; workspace 10
+
+for_window [title="File Transfer*"] floating enable
+for_window [class="Galculator"] floating enable
+for_window [class="GParted"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [title="^i3exit:.*"] floating enable
+for_window [class="Thunderbird" window_role="Msgcompose"] floating enable
+for_window [class="Thunderbird" window_role="Preferences"] floating enable
+for_window [class="Thunderbird" window_role="EventDialog"] floating enable
+
+for_window [class="FromScratch"] move scratchpad
+ 
+for_window [class="^.*"] border pixel 2
+for_window [urgent=latest] focus
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Ctrl+l exec --no-startup-id xautolock -locknow
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Ctrl+m exec --no-startup-id i3exit
+
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+m mode "$launcher"
+set $launcher (c)ockatrice, ge(d)it, (g)imp, (h)exchat, (i)nkscape, (t)ransmission, (y)Ed, (v)lc, (w)ireshark
+mode "$launcher" {
+	bindsym c exec --no-startup-id cockatrice; mode "default"
+	bindsym h exec --no-startup-id hexchat; mode "default"
+	bindsym t exec --no-startup-id transmission-gtk; mode "default"
+	bindsym g exec --no-startup-id gimp; mode "default"
+	bindsym y exec --no-startup-id yEd; mode "default"
+	bindsym i exec --no-startup-id inkscape; mode "default"
+	bindsym w exec --no-startup-id wireshark; mode "default"
+	bindsym d exec --no-startup-id gedit; mode "default"
+	bindsym v exec --no-startup-id vlc; mode "default"
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+a mode "$arandr"
+set $arandr (w)ork, work (h)dmi, (n)ormal
+mode "$arandr" {
+	bindsym w exec /home/thomas/.screenlayout/.workscreenlayout.sh; mode "default"
+	bindsym h exec /home/thomas/.screenlayout/.workscreenlayouthdmi.sh; mode "default"
+    bindsym n exec /home/thomas/.screenlayout/.screenlayout.sh;mode "default"
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bar {
+        status_command i3status  #j4status -c /home/thomas/.config/j4status/j4status.conf 
+        font pango:Cantarell,Icons 9
+        colors {
+                separator  #cb4b16
+                background #073642
+                statusline #b58900
+                focused_workspace #eee8d5 #cb4b16 #002b36
+                active_workspace #eee8d5 #b58900 #002b36
+                inactive_workspace #93a1a1 #002b36 #fdf6e3
+                urgent_workspace #FF7519 #dc322f #FFFFFF
+        }
+	    output eDP1
+	    output DP2
+        output HDMI1
+        tray_output eDP1
+}
+
+exec_always --no-startup-id compton -b
+exec_always --no-startup-id sudo rfkill block bluetooth
+exec_always --no-startup-id sudo tlp start
+exec_always --no-startup-id sudo iptables-restore /etc/firewall.conf
+exec --no-startup-id redshift -c /home/thomas/.config/redshift.conf
+exec --no-startup-id feh --bg-scale /home/thomas/Pictures/Wallpaper/Download-Best-Space-Wallpaper.jpg
+exec --no-startup-id twmnd
+exec --no-startup-id ssh-agent
+exec --no-startup-id blueman-applet
+exec --no-startup-id nm-applet
+exec --no-startup-id volumeicon
+exec --no-startup-id mate-power-manager
+exec --no-startup-id xautolock -time 5 -locker "gnome-screensaver-command --lock"
+exec --no-startup-id shutter --min_at_startup
+
+client.focused #cb4b16 #cb4b16 #000000 #FFFFFF
+client.unfocused #93a1a1 #93a1a1 #FF7519 #222222
+client.urgent #4E3608 #900000 #FFFFFF #900000
+
+bindsym $mod+n mode "focused"
+
+mode "focused" {
+        # keybindings for marking and jumping to clients
+        bindsym m exec i3-input -F 'mark %s' -P 'Mark: '
+        bindsym a exec i3-input -F '[con_mark=%s] focus' -P 'Go to mark: ', mode "default"
+
+        # Assign marks to keys 1-0
+        bindsym Shift+1 mark mark1, mode "default"
+        bindsym Shift+2 mark mark2, mode "default"
+        bindsym Shift+3 mark mark3, mode "default"
+        bindsym Shift+4 mark mark4, mode "default"
+        bindsym Shift+5 mark mark5, mode "default"
+        bindsym Shift+6 mark mark6, mode "default"
+        bindsym Shift+7 mark mark7, mode "default"
+        bindsym Shift+8 mark mark8, mode "default"
+        bindsym Shift+9 mark mark9, mode "default"
+        bindsym Shift+0 mark mark0, mode "default"
+
+        # Exit to the default mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+	
+	bindsym f exec i3-input -F '[con_mark=%s] move container to workspace current' -P 'Fetch mark: ', mode "default"
+}
+
+        # Jump to clients marked 1-0
+        bindsym Shift+F1 [con_mark="mark1"] focus
+        bindsym Shift+F2 [con_mark="mark2"] focus
+        bindsym Shift+F3 [con_mark="mark3"] focus
+        bindsym Shift+F4 [con_mark="mark4"] focus
+        bindsym Shift+F5 [con_mark="mark5"] focus
+        bindsym Shift+F6 [con_mark="mark6"] focus
+        bindsym Shift+F7 [con_mark="mark7"] focus
+        bindsym Shift+F8 [con_mark="mark8"] focus
+        bindsym Shift+F9 [con_mark="mark9"] focus
+        bindsym Shift+F10 [con_mark="mark0"] focus
+
+
+bindsym $mod+Shift+s move scratchpad
+
+bindsym $mod+s scratchpad show
+
+workspace 1 output eDP1
+workspace 2 output eDP1
+workspace 3 output eDP1
+workspace 4 output eDP1
+workspace 5 output HDMI1
+workspace 6 output HDMI1
+workspace 7 output HDMI1
+workspace 8 output HDMI1 
+workspace 9 output eDP1
+workspace 10 output eDP1
